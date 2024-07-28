@@ -40,10 +40,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Employee login(EmployeeLoginDTO employeeLoginDTO) {
         String username = employeeLoginDTO.getUsername();
         String password = employeeLoginDTO.getPassword();
-
         //1、根据用户名查询数据库中的数据
         Employee employee = employeeMapper.getByUsername(username);
-
         //2、处理各种异常情况（用户名不存在、密码不对、账号被锁定）
         if (employee == null) {
             //账号不存在
@@ -111,6 +109,48 @@ public class EmployeeServiceImpl implements EmployeeService {
         List<Employee> recorder = page.getResult();
         PageResult pageResult = new PageResult(total, recorder);
         return pageResult;
+    }
+
+    /**
+     * 启用或禁用员工账户
+     *
+     * @param status
+     * @param id
+     */
+    @Override
+    public void starOrStop(Integer status, Long id) {
+        // 构建一个员工实体类对象
+        Employee emp = Employee.builder()
+                .status(status)
+                .id(id)
+                .build();
+        employeeMapper.update(emp);
+    }
+
+    /**
+     * 根据id查询员工信息
+     *
+     * @return 员工实体对象
+     */
+    @Override
+    public Employee getById(long id) {
+        Employee employee = employeeMapper.selectById(id);
+        employee.setPassword("***");
+        return employee;
+    }
+
+    /**
+     * 修改员工信息
+     *
+     * @param employeeDTO
+     */
+    @Override
+    public void update(EmployeeDTO employeeDTO) {
+        Employee employee = new Employee();
+        BeanUtils.copyProperties(employeeDTO, employee);
+        employee.setUpdateUser(BaseContext.getCurrentId());
+        employee.setUpdateTime(LocalDateTime.now());
+        employeeMapper.update(employee);
     }
 
 }

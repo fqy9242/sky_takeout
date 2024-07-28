@@ -28,7 +28,6 @@ import java.util.Map;
 @Slf4j
 @Api(tags = "员工相关接口")
 public class EmployeeController {
-
     @Autowired
     private EmployeeService employeeService;
     @Autowired
@@ -42,12 +41,10 @@ public class EmployeeController {
      */
     @PostMapping("/login")
     @ApiOperation("员工登录")
-    @GetMapping
-    public Result<EmployeeLoginVO> login(EmployeeLoginDTO employeeLoginDTO) {
+    // @GetMapping
+    public Result<EmployeeLoginVO> login(@RequestBody EmployeeLoginDTO employeeLoginDTO) {
         log.info("员工登录：{}", employeeLoginDTO);
-
         Employee employee = employeeService.login(employeeLoginDTO);
-
         //登录成功后，生成jwt令牌
         Map<String, Object> claims = new HashMap<>();
         claims.put(JwtClaimsConstant.EMP_ID, employee.getId());
@@ -102,5 +99,42 @@ public class EmployeeController {
         PageResult pageResult = employeeService.pageQuery(employeePageQueryDTO);
         return Result.success(pageResult);
     }
+
+    /**
+     *  启用或禁用员工账户 0 禁用 1 启用
+     * @return
+     */
+   @ApiOperation("启用或禁用员工账户")
+   @PostMapping("/status/{status}")
+    public Result startOrStop(@PathVariable Integer status, Long id) {
+       log.info("启用或禁用员工账户{},{}", status, id);
+       employeeService.starOrStop(status, id);
+       return Result.success();
+   }
+
+    /**
+     * 根据id查询员工信息
+     * @param id
+     * @return
+     */
+   @GetMapping("/{id}")
+   @ApiOperation("根据id查询员工信息")
+   public Result<Employee> getById(@PathVariable long id) {
+       Employee employee = employeeService.getById(id);
+       return Result.success(employee);
+   }
+
+    /**
+     * 修改员工信息
+     * @param employeeDTO
+     * @return
+     */
+   @ApiOperation("修改员工信息")
+   @PutMapping
+   public Result update(@RequestBody EmployeeDTO employeeDTO) {
+        log.info("修改员工信息:{}", employeeDTO);
+        employeeService.update(employeeDTO);
+       return Result.success();
+   }
 
 }
