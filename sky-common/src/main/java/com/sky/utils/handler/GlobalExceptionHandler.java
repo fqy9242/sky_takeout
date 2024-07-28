@@ -1,4 +1,4 @@
-package com.sky.handler;
+package com.sky.utils.handler;
 
 import com.sky.constant.MessageConstant;
 import com.sky.exception.BaseException;
