@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sky.mapper.CategoryMapper">
+    <!-- 更新分类 -->
+    <update id="update">
+        update category
+        <set>
+            <if test="name != '' and name != null">name = #{name},</if>
+            <if test="sort != null">sort = #{sort},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="updateUser != null">update_user = #{updateUser},</if>
+        </set>
+        where id = #{id}
+    </update>
+    <!--查询菜品/套餐分类-->
+    <select id="selectPage" resultType="com.sky.entity.Category">
+        select * from category
+        <where>
+            <if test="name != '' and name != null">name = #{name} and</if>
+            <if test="type != null">type = #{type}</if>
+        </where>
+    </select>
+</mapper>
