@@ -39,6 +39,6 @@ sky:
     admin-token-name: token
   alioss:
     endpoint: ${sky.alioss.endpoint}
-    access-key-id: ${sky.alioss.access-key-id}
-    access-key-secret: ${sky.alioss.access-key-secret}
+#    access-key-id: ${sky.alioss.access-key-id}
+#    access-key-secret: ${sky.alioss.access-key-secret}
     bucket-name: ${sky.alioss.bucket-name}
