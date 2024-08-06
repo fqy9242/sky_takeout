@@ -15,11 +15,11 @@ public interface CategoryService {
 	void save(CategoryDTO categoryDTO);
 
 	/**
-	 *  查询菜品列表
+	 *  根据类型查询菜品列表
 	 * @param type
 	 * @return
 	 */
-	List<Category> getByType(String type);
+	List<Category> getByType(Integer type);
 
 	/**
 	 *  分类分页查询

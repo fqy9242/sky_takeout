@@ -11,3 +11,10 @@ sky:
     # 阿里云的key已通过环境变量配置文件来读取
     # OSS_ACCESS_KEY_ID => OSS_ACCESS_KEY_SECRET
     bucket-name: q-sky-take-out
+  redis:
+    host: localhost
+    port: 6379
+    database: 0
+  wechat:
+    appid:
+    secret:

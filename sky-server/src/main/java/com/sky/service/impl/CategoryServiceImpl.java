@@ -20,7 +20,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
 /**
  *  菜品分类服务层实现类
  */
@@ -32,7 +31,6 @@ public class CategoryServiceImpl implements CategoryService {
 	private DishMapper dishMapper;
 	@Autowired
 	private SetmealMapper setmealMapper;
-
 	/**
 	 * 添加菜品分类
 	 *
@@ -48,15 +46,11 @@ public class CategoryServiceImpl implements CategoryService {
 		category.setStatus(StatusConstant.DISABLE);
 		categoryMapper.insert(category);
 	}
-
 	/**
-	 * 查询菜品列表
-	 *
-	 * @param type
-	 * @return
+	 * 根据类型查询分类
 	 */
 	@Override
-	public List<Category> getByType(String type) {
+	public List<Category> getByType(Integer type) {
 		return categoryMapper.selectByType(type);
 	}
 
