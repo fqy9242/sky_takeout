@@ -77,8 +77,6 @@ public class SetmealContrller {
 
 	/**
 	 *  修改套餐
-	 * @param setmealDTO
-	 * @return
 	 */
 	@ApiOperation("修改套餐")
 	@PutMapping
