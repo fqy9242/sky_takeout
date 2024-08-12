@@ -66,5 +66,47 @@
         </where>
         order by order_time desc
     </select>
+    <select id="sumByMap" resultType="java.lang.Double">
+        select sum(amount) from orders
+        <where>
+            <if test="begin != null">
+                and order_time &gt; #{begin}
+            </if>
+           <if test="end != null">
+                and order_time &lt; #{end}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+        </where>
+    </select>
+    <!--根据动态条件统计订单数量-->
+    <select id="countByMap" resultType="Integer">
+        select count(id) from orders
+        <where>
+            <if test="begin != null">
+                and order_time &gt; #{begin}
+            </if>
+            <if test="end != null">
+                and order_time &lt; #{end}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+        </where>
+    </select>
+    <!--获取指定时间内的销量top10-->
+    <select id="getSalesTop10" resultType="com.sky.dto.GoodsSalesDTO">
+        SELECT od.name, SUM(od.number) number
+        FROM orders o, order_detail od
+        <where>
+            od.order_id = o.id AND o.status = 5
+            <if test="begin != null">AND o.order_time &gt; #{begin}</if>
+            <if test="end != null">AND o.order_time &lt; #{end}</if>
+        </where>
+        GROUP BY od.name
+        ORDER BY number DESC
+        LIMIT 0, 10
+    </select>
 
 </mapper>
